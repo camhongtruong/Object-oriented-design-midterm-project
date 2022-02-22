@@ -20,7 +20,7 @@ import view.SetCharacterObserver;
 
 public class Bird extends GameModel {
 	private int dy;
-	private int number;
+	private int number, score;
 	private SoundPlayer hitSound, flapSound, getScoreSound;
 	private List<SetCharacterObserver> listCharacter = new ArrayList<SetCharacterObserver>();
 
@@ -61,12 +61,37 @@ public class Bird extends GameModel {
 			this.y = 0;
 	}
 
+	public boolean checkCollision(GroupOfTubes tubeColumn) {
+		Rectangle birdRect = this.getRect();
+		Rectangle tubeRect;
+		for (int i = 0; i < tubeColumn.getTubes().size(); i++) {
+			tubeRect = tubeColumn.getTubes().get(i).getRect();
+			if (birdRect.intersects(tubeRect) || this.getY() + this.getHeight() > GameView.HEIGHT) {
+				this.getHitSound().play();
+				score = 0;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public int score(GroupOfTubes tubeColumn) {
+		for (Tube t : tubeColumn.getTubes()) {
+			if (this.getX() + this.getWidth() / 2 > t.getX() + t.getWidth() / 2 - 5
+					&& this.getX() + this.getWidth() / 2 < t.getX() + t.getWidth() / 2 + 5) {
+				score++;
+				this.getGetScoreSound().play();
+			}
+		}
+		return score;
+	}
+
 	@Override
 	public void render(Graphics2D g, ImageObserver obs) {
 		g.drawImage(image, x, y, obs);
 	}
-	
-	//Observer
+
+	// character
 	public void register(SetCharacterObserver obs) {
 		listCharacter.add(obs);
 
@@ -76,7 +101,6 @@ public class Bird extends GameModel {
 		if (obs != null) {
 			listCharacter.remove(obs);
 		}
-
 	}
 
 	public void notifyToObserver() {
@@ -96,7 +120,7 @@ public class Bird extends GameModel {
 		this.height = 49;
 	}
 
-	//sound
+	// sound
 	public SoundPlayer getHitSound() {
 		return hitSound;
 	}

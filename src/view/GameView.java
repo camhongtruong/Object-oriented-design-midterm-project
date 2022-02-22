@@ -60,6 +60,7 @@ public class GameView extends JPanel implements ActionListener, SetCharacterObse
 		this.bird = b;
 		this.controler = controler;
 		bird.register(this);
+		bird.register(this);
 		setFocusable(true);
 		setDoubleBuffered(false);
 		Timer timer = new Timer(15, this);
@@ -73,6 +74,7 @@ public class GameView extends JPanel implements ActionListener, SetCharacterObse
 			bird.tick();
 			controler.checkCollision();
 			score = controler.score();
+
 		}
 
 		repaint();

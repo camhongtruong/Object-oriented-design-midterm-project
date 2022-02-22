@@ -15,7 +15,7 @@ public class Controller implements IController {
 	private Bird b;// model
 	private GameView view;// view
 	private GroupOfTubes tubeColumn;
-	private int score;
+//	private int score;
 
 	public Controller(Bird bird) {
 		super();
@@ -45,29 +45,14 @@ public class Controller implements IController {
 
 	@Override
 	public void checkCollision() {
-		Rectangle birdRect = b.getRect();
-		Rectangle tubeRect;
-		for (int i = 0; i < tubeColumn.getTubes().size(); i++) {
-			tubeRect = tubeColumn.getTubes().get(i).getRect();
-			if (birdRect.intersects(tubeRect) || b.getY() + b.getHeight() > GameView.HEIGHT) {
-				b.getHitSound().play();
-				score = 0;
-				view.endGame();
+		if (b.checkCollision(tubeColumn))
+			view.endGame();
 
-			}
-		}
 	}
 
 	@Override
 	public int score() {
-		for (Tube t : tubeColumn.getTubes()) {
-			if (b.getX() + b.getWidth() / 2 > t.getX() + t.getWidth() / 2 - 5
-					&& b.getX() + b.getWidth() / 2 < t.getX() + t.getWidth() / 2 + 5) {
-				score++;
-				b.getGetScoreSound().play();
-			}
-		}
-		return score;
+		return b.score(tubeColumn);
 
 	}
 
