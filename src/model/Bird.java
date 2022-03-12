@@ -18,7 +18,7 @@ import view.FlappyBird;
 import view.GameView;
 import view.SetCharacterObserver;
 
-public class Bird extends GameModel {
+public class Bird extends GameModel implements Subject {
 	private int dy;
 	private int number, score;
 	private SoundPlayer hitSound, flapSound, getScoreSound;
@@ -92,20 +92,21 @@ public class Bird extends GameModel {
 	}
 
 	// character
+	@Override
 	public void register(SetCharacterObserver obs) {
 		listCharacter.add(obs);
-
 	}
 
+	@Override
 	public void remove(SetCharacterObserver obs) {
-		if (obs != null) {
-			listCharacter.remove(obs);
-		}
+		listCharacter.remove(obs);
 	}
 
+	@Override
 	public void notifyToObserver() {
 		for (SetCharacterObserver c : listCharacter)
 			c.updateCharacter(this.number);
+
 	}
 
 	public void changeCharacter(int number) {

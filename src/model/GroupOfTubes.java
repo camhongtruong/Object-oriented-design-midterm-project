@@ -68,4 +68,8 @@ public class GroupOfTubes {
 		}
 	}
 
+	public void setNewTube() {
+		tubes.clear();
+		initTubes(true);
+	}
 }

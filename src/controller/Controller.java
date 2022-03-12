@@ -14,8 +14,7 @@ import view.GameView;
 public class Controller implements IController {
 	private Bird b;// model
 	private GameView view;// view
-	private GroupOfTubes tubeColumn;
-//	private int score;
+	private GroupOfTubes tubeColumn = new GroupOfTubes();
 
 	public Controller(Bird bird) {
 		super();
@@ -39,8 +38,7 @@ public class Controller implements IController {
 	@Override
 	public void restart() {
 		b.setLocationForBird();
-		view.setTubeColumn(new GroupOfTubes());
-		tubeColumn = view.getTubeColumn();
+		tubeColumn.setNewTube();
 	}
 
 	@Override
@@ -74,6 +72,11 @@ public class Controller implements IController {
 		public void keyReleased(KeyEvent e) {
 			controler.controllRelease();
 		}
+	}
+
+	@Override
+	public GroupOfTubes getTubeColumns() {
+		return tubeColumn;
 	}
 
 }

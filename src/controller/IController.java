@@ -1,8 +1,5 @@
 package controller;
 
-import java.awt.event.KeyEvent;
-
-import model.Bird;
 import model.GroupOfTubes;
 
 public interface IController {
@@ -16,5 +13,7 @@ public interface IController {
 	public void checkCollision();
 
 	public int score();
+	
+	public GroupOfTubes getTubeColumns();
 
 }

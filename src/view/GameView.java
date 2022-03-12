@@ -59,7 +59,7 @@ public class GameView extends JPanel implements ActionListener, SetCharacterObse
 		}
 		this.bird = b;
 		this.controler = controler;
-		bird.register(this);
+		this.tubeColumn = controler.getTubeColumns();
 		bird.register(this);
 		setFocusable(true);
 		setDoubleBuffered(false);
